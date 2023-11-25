@@ -5,12 +5,9 @@ import mongoose from "mongoose";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGO_URL ;
-console.log('MongoDB URI:', process.env.MONGO_URL);
-mongoose.connect(MONGODB_URI,{
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
+const MONGODB_URI = process.env.MONGO ;
+// console.log('MongoDB URI:', process.env.MONGO_URL);
+mongoose.connect(MONGODB_URI).then(() => {
     console.log('Connected to MongoDB');
     // Continue with your application logic
   })
