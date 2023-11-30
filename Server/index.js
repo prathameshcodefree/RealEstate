@@ -7,8 +7,9 @@ import mongoose from "mongoose";
 
 
 dotenv.config();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 const MONGODB_URI = process.env.MONGO ;
+console.log(PORT)
 // console.log('MongoDB URI:', process.env.MONGO_URL);
 mongoose.connect(MONGODB_URI).then(() => {
     console.log('Connected to MongoDB');
@@ -21,9 +22,19 @@ mongoose.connect(MONGODB_URI).then(() => {
 const app=express();
 app.use(express.json());
 app.listen(PORT,()=>{
-    console.log("SERVER started at port 3000")
+    console.log(`Server running at port ${PORT}`)
 })
 
 
 app.use('/api/user',userRoute)
 app.use('/api/auth',userAuth)
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  return res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+  });
+});
